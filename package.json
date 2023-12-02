@@ -1,0 +1,17 @@
+{
+  "name": "api-testing-project-1-cypress",
+  "version": "1.0.0",
+  "description": "Testing API Cypress project",
+  "main": "index.js",
+  "scripts": {
+    "cy:run": "cypress run",
+    "cy:1": "cypress run -- --record --spec `cypress/e2e/**.cy.js`",
+    "cy:tag": "cypress run --tag '@smoke' --spec `cypress/e2e/test.cy.js`"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.6.0"
+  }
+}
