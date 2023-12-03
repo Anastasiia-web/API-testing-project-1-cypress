@@ -8,13 +8,49 @@
 describe('Given the Users api', () => {
     context('When I send GET /usuarios', () => {
       it('Then it should return a list with all registered users', () => {       
-        // tests
+        cy.request({
+          method: 'GET',
+          url: '/usuarios'
+      })
+          .then((response) => {
+              expect(response.status).to.eq(200)
+              expect(response.body).to.haveOwnProperty('quantidade')
+              expect(response.body).to.haveOwnProperty('usuarios').and.not.empty
+              expect(response.body.quantidade).to.eq(response.body.usuarios.length)
+              // iterating via array
+              Cypress._.each(response.body.usuarios, (usuario) => {
+                expect(usuario).to.have.all.keys('nome', 'email', 'password', 'administrador', '_id')
+                expect(usuario.email).to.not.be.null
+              })
+              // setting task           
+              const userId = response.body.usuarios[0]._id
+              cy.task('setItem', {
+                name: 'userId',
+                value: userId
+              })
+              // recording data to json file
+              cy.exec(
+                `echo ${JSON.stringify(response.body.usuarios[0])} >cypress/fixtures/my.json`
+              )
+          });
       });
     });
-  
+
     context('When I send GET /usuarios passing id query param', () => {
+      beforeEach(() => {
+        cy.task('getItem','userId').as('userId')
+      })
       it('Then it should return only the filtered user', () => {
-        // tests
-      });
+        const userIdTask = cy.get('@userId')
+        cy.fixture('my.json').then((user) => {
+          const userIdFile = user._id  
+          cy.request(`/usuarios?_id=${userIdFile}`)
+            .then((response) => {
+              expect(response.status).to.eq(200)
+              expect(JSON.stringify(user)).to.eq(JSON.stringify(response.body.usuarios[0]))
+              expect(userIdFile).to.eq(response.body.usuarios[0]._id)  // validating using features file          
+            });      
+        })
+        userIdTask.should('equal', '09FwP6EBUBe6YHzT')})  // validatingusing task
     });
   });
