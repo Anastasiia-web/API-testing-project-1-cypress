@@ -48,9 +48,10 @@ describe('Given the Users api', () => {
             .then((response) => {
               expect(response.status).to.eq(200)
               expect(JSON.stringify(user)).to.eq(JSON.stringify(response.body.usuarios[0]))
-              expect(userIdFile).to.eq(response.body.usuarios[0]._id)  // validating using features file          
+              expect(userIdFile).to.eq(response.body.usuarios[0]._id)  // validating using features file
+              userIdTask.should('equal', userIdFile)  // validatingusing task         
             });      
         })
-        userIdTask.should('equal', '09FwP6EBUBe6YHzT')})  // validatingusing task
     });
   });
+});

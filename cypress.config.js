@@ -1,5 +1,7 @@
 const { defineConfig } = require("cypress");
 
+const faker = require('faker');
+
 module.exports = defineConfig({
   e2e: {
       supportFile: false,
@@ -15,6 +17,15 @@ module.exports = defineConfig({
               return items[name]
             }
           },
+          freshUser() {
+            user = {
+              nome: faker.name.firstName(),
+              email: faker.internet.email(),
+              password: faker.internet.password(),
+              administrador: "true"
+            };
+            return user;
+          }
         })
       },
     baseUrl: 'https://serverest.dev'
