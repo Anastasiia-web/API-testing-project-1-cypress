@@ -3,6 +3,9 @@ const { defineConfig } = require("cypress");
 const faker = require('faker');
 
 module.exports = defineConfig({
+  env: {
+    "my-var": "ok",
+  },
   e2e: {
       supportFile: false,
       setupNodeEvents (on, config) {
