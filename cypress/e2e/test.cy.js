@@ -8,3 +8,18 @@ describe('Mocha’s interface', () => {
       });
     });
   });
+//short test description
+  describe('produtos API', () => {
+    it('returns JSON', () => {
+      cy.request('/produtos')
+        .its('headers')
+        .its('content-type')
+        .should('include', 'application/json')
+    })
+  
+    it('loads 2 items', () => {
+      cy.request('/produtos')
+        .its('body')
+        .should('have.length', 2)
+    })
+  })

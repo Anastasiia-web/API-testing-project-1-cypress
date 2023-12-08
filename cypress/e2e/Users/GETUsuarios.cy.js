@@ -36,7 +36,7 @@ describe('Given the Users api', () => {
       });
     });
 
-    context('When I send GET /usuarios passing id query param', () => {
+    context('When I send GET /usuarios passing id', () => {
       beforeEach(() => {
         cy.task('getItem','userId').as('userId')
       })
@@ -52,6 +52,23 @@ describe('Given the Users api', () => {
               userIdTask.should('equal', userIdFile)  // validatingusing task         
             });      
         })
+    });
+  });
+
+  // using qs - query string
+  context('When I send GET /usuarios passing id query param', () => {
+    it('Then it should return only the filtered user', () => {
+      cy.request({
+        method: 'GET',
+        url: 'https://serverest.dev/usuarios',
+        qs: {
+          _id: '0uxuPY0cbmQhpEz1'
+        }
+      })
+        .should((response) => {
+          expect(response.status).to.eq(200)
+          expect(response.body.usuarios[0].nome).to.eq("Fulano da Silva")
+        });
     });
   });
 });
