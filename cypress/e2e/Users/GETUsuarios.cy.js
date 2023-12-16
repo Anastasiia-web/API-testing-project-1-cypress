@@ -23,26 +23,26 @@ describe('Given the Users api', () => {
                 expect(usuario.email).to.not.be.null
               })
               // setting task           
-              const userId = response.body.usuarios[0]._id
+              const userId = response.body.usuarios[1]._id
               cy.task('setItem', {
                 name: 'userId',
                 value: userId
               })
               // recording data to json file
               cy.exec(
-                `echo ${JSON.stringify(response.body.usuarios[0])} >cypress/fixtures/my.json`
+                `echo ${JSON.stringify(response.body.usuarios[1])} >cypress/fixtures/user.json`
               )
           });
       });
     });
 
     context('When I send GET /usuarios passing id', () => {
-      beforeEach(() => {
+      before(() => {
         cy.task('getItem','userId').as('userId')
       })
       it('Then it should return only the filtered user', () => {
         const userIdTask = cy.get('@userId')
-        cy.fixture('my.json').then((user) => {
+        cy.fixture('user.json').then((user) => {
           const userIdFile = user._id  
           cy.request(`/usuarios?_id=${userIdFile}`)
             .then((response) => {
@@ -57,18 +57,23 @@ describe('Given the Users api', () => {
 
   // using qs - query string
   context('When I send GET /usuarios passing id query param', () => {
+    before(() => {
+      cy.task('getItem','userId').as('userId')
+    })
     it('Then it should return only the filtered user', () => {
-      cy.request({
-        method: 'GET',
-        url: 'https://serverest.dev/usuarios',
-        qs: {
-          _id: '0uxuPY0cbmQhpEz1'
-        }
+      cy.get('@userId').then((id) => {
+        cy.request({
+          method: 'GET',
+          url: 'https://serverest.dev/usuarios',
+          qs: {
+            _id: `${id}`
+          }
+        })
+          .should((response) => {
+            expect(response.status).to.eq(200)
+            expect(response.body.usuarios[0]._id).to.eq(`${id}`)
+          });
       })
-        .should((response) => {
-          expect(response.status).to.eq(200)
-          expect(response.body.usuarios[0].nome).to.eq("Fulano da Silva")
-        });
     });
   });
 });

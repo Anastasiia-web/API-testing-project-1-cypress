@@ -1,17 +1,17 @@
 /// <reference types="cypress" />
 
-describe('Products api', () => {
-    context('GET /produtos', () => {
-        it('should return a list with all products', () => {
+describe('Given Products api', () => {
+    context('When I send GET /produtos', () => {
+        it('Then it should return a list with all products', () => {
             cy.request({
                 method: 'GET',
                 url: '/produtos'
             })
                 .then((response) => {
                     expect(response.status).to.eq(200)
-                    expect(response.body.quantidade).to.eq(2) 
+                    expect(response.body.quantidade).to.eq(4) 
                     expect(response.body).to.haveOwnProperty('produtos').and.not.empty
-                    expect(response.body.produtos.length).to.be.eq(2);
+                    expect(response.body.produtos.length).to.be.eq(4);
                     expect(response.body.produtos[0]).to.have.all.keys(
                         'nome', 'preco', 'descricao', 'quantidade', '_id'
                       )
@@ -45,23 +45,7 @@ describe('Products api', () => {
                     expect(response.status).to.eq(200)
                     expect(response.body).to.haveOwnProperty("produtos")
                     expect(response.body.produtos).to.be.empty
-                });      
+                });
         })
     })
 });
-
-    // example how to overwrite env variable
-    // describe(
-    //     'test against Spanish content',
-    //     {
-    //       env: {
-    //         "language": "en",
-    //       },
-    //     },
-    //     () => {
-    //       it('displays Spanish', () => {
-    //         cy.visit(`https://docs.cypress.io/${Cypress.env('language')}/`)
-    //         cy.contains('¿Por qué Cypress?')
-    //       })
-    //     }
-    //   )

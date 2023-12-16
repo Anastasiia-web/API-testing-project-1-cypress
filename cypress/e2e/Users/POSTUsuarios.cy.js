@@ -46,7 +46,7 @@ describe('Given the Users api', () => {
   // negative test case
   context('When I send POST /usuarios with already registered email', () => {
     it('Then the error message should be returned', () => {
-      cy.fixture('my.json').then((registeredUser) => {
+      cy.fixture('user.json').then((registeredUser) => {
       cy.request({
         method: 'POST',
         url: '/usuarios',
@@ -59,6 +59,7 @@ describe('Given the Users api', () => {
     });
   });
 });
+
 });
 
 // without plugin faker
