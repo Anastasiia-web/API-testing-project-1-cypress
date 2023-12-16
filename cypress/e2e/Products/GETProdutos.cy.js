@@ -9,9 +9,9 @@ describe('Given Products api', () => {
             })
                 .then((response) => {
                     expect(response.status).to.eq(200)
-                    expect(response.body.quantidade).to.eq(4) 
+                    expect(response.body.quantidade).to.eq(2) 
                     expect(response.body).to.haveOwnProperty('produtos').and.not.empty
-                    expect(response.body.produtos.length).to.be.eq(4);
+                    expect(response.body.produtos.length).to.be.eq(2);
                     expect(response.body.produtos[0]).to.have.all.keys(
                         'nome', 'preco', 'descricao', 'quantidade', '_id'
                       )
@@ -48,4 +48,19 @@ describe('Given Products api', () => {
                 });
         })
     })
+
+    context('When I intercept the response', () => {
+        it('should return a product from my-product.json file', () => {
+          cy.intercept('GET', '/produtos', { fixture: 'my-product.json' }).as('h')
+          cy.visit('https://serverest.dev')
+          cy.get('#operations-Produtos-get_produtos > .opblock-summary > .opblock-summary-control > .opblock-summary-method').click()
+          cy.get('.try-out > .btn').click()
+          cy.get('.execute-wrapper > .btn').click()
+          cy.wait('@h').its('response')
+          .then(response => {
+            cy.wrap(response).its('statusCode').should('eq', 200)     
+            cy.wrap(response).its('body._id').should('eq', 'My-BeeJh5lz3k6kSIzA')
+          })
+        })
+      });
 });

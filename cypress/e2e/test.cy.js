@@ -19,20 +19,24 @@ describe('Mocha’s interface', () => {
   
     it('loads 2 items', () => {
       cy.request('/produtos')
-        .its('body')
+        .its('body.produtos')
         .should('have.length', 2)
     })
   })
 
-  // we set the response to be the activites.json fixture
-// cy.intercept('GET', '/activities/*', { fixture: 'activities.json' })
-
-describe('intercepting request', () => {
-  context('GET /produtos', () => {
-    it('should return a product from my-pr.json file', () => {
-      cy.intercept('GET', '/produtos', { fixture: 'my-pr.json' })
-        .its('body')
-        .should('have.length', 1)
+describe('Given api GET /produtos', () => {
+  context('When I intercept the response', () => {
+    it('should return a product from my-product.json file', () => {
+      cy.intercept('GET', '/produtos', { fixture: 'my-product.json' }).as('h')
+      cy.visit('https://serverest.dev')
+      cy.get('#operations-Produtos-get_produtos > .opblock-summary > .opblock-summary-control > .opblock-summary-method').click()
+      cy.get('.try-out > .btn').click()
+      cy.get('.execute-wrapper > .btn').click()
+      cy.wait('@h').its('response')
+      .then(response => {
+        cy.wrap(response).its('statusCode').should('eq', 200)     
+        cy.wrap(response).its('body._id').should('eq', 'My-BeeJh5lz3k6kSIzA')
+      })
     })
   });
 });
