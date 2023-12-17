@@ -30,7 +30,7 @@ describe('Given the Users api', () => {
               })
               // recording data to json file
               cy.exec(
-                `echo ${JSON.stringify(response.body.usuarios[1])} >cypress/fixtures/user.json`
+                `echo ${JSON.stringify(response.body.usuarios[1]._id)} >cypress/fixtures/user.json`
               )
           });
       });
@@ -44,7 +44,7 @@ describe('Given the Users api', () => {
       it('Then it should return only the filtered user', () => {
         const userIdTask = cy.get('@userId')
         cy.fixture('user.json').then((user) => {
-          const userIdFile = JSON.stringify(user._id)
+          const userIdFile = user._id
           cy.request(`/usuarios?_id=${userIdFile}`)
             .then((response) => {
               expect(response.status).to.eq(200)
