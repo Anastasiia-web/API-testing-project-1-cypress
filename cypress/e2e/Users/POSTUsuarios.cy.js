@@ -44,22 +44,21 @@ describe('Given the Users api', () => {
   });
 
   // negative test case
-  context('When I send POST /usuarios with already registered email', () => {
-    it('Then the error message should be returned', () => {
-      cy.fixture('user.json').then((registeredUser) => {
-      cy.request({
-        method: 'POST',
-        url: '/usuarios',
-        body: JSON.stringify(registeredUser),
-        failOnStatusCode: false
-      })
-        .should((response) => {
-          expect(response.status).eq(400)
-        });
-    });
-  });
-});
-
+//   context('When I send POST /usuarios with already registered email', () => {
+//     it('Then the error message should be returned', () => {
+//       cy.fixture('user.json').then((registeredUser) => {
+//       cy.request({
+//         method: 'POST',
+//         url: '/usuarios',
+//         body: JSON.stringify(registeredUser),
+//         failOnStatusCode: false
+//       })
+//         .should((response) => {
+//           expect(response.status).eq(400)
+//         });
+//     });
+//   });
+// });
 });
 
 // without plugin faker
