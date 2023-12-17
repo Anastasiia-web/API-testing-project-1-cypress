@@ -4,6 +4,8 @@
   "description": "Testing API Cypress project",
   "main": "index.js",
   "scripts": {
+    "build": "npm run lint",
+    "e2e": "cypress run",
     "cy:1": "cypress run -- --record --spec `cypress/e2e/**.cy.js`",
     "cy:tag": "cypress run --tag '@smoke' --spec `cypress/e2e/test.cy.js`",
     "cypress:open": "cypress open",
