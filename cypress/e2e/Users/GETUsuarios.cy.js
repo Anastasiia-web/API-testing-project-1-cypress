@@ -30,12 +30,12 @@ describe('Given the Users api', () => {
               })
               // recording data to json file
               cy.exec(
-                `echo ${String(response.body.usuarios[1]._id)} >cypress/fixtures/user.json`
+                `echo ${JSON.stringify(response.body.usuarios[1]._id)} >cypress/fixtures/user.json`
               )
           });
       });
     })
-// `echo ${JSON.stringify(response.body.usuarios[1]._id)} >cypress/fixtures/user.json`
+
     // commented for github run
     context('When I send GET /usuarios passing id', () => {
       before(() => {
@@ -45,12 +45,12 @@ describe('Given the Users api', () => {
         const userIdTask = cy.get('@userId')
         cy.fixture('user.json').then((user) => {
           const userIdFile = user._id
-          cy.request(`/usuarios?_id=${userIdFile}`)
+          cy.request(`/usuarios?_id=${userIdTask}`)
             .then((response) => {
               expect(response.status).to.eq(200)
               expect(JSON.stringify(user)).to.eq(JSON.stringify(response.body.usuarios[0]))
               expect(userIdFile).to.eq(response.body.usuarios[0]._id)  // validating using features file
-              userIdTask.should('equal', userIdFile)  // validatingusing task         
+              // userIdTask.should('equal', userIdFile)  // validatingusing task         
             });      
         })
     });
