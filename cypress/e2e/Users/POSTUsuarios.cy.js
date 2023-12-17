@@ -51,7 +51,7 @@ describe('Given the Users api', () => {
       cy.request({
         method: 'POST',
         url: '/usuarios',
-        body: `${registeredUser}`,
+        body: JSON.stringify(registeredUser),
         failOnStatusCode: false
       })
         .should((response) => {
@@ -61,7 +61,6 @@ describe('Given the Users api', () => {
   });
 });
 });
-//        body: JSON.stringify(registeredUser),
 
 // without plugin faker
 // describe('Given the Users api', () => {
