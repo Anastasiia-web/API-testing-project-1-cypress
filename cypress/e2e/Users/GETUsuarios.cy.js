@@ -30,12 +30,12 @@ describe('Given the Users api', () => {
               })
               // recording data to json file
               cy.exec(
-                `echo ${response.body.usuarios[1]} >cypress/fixtures/user.json`
+                `echo ${JSON.stringify(response.body.usuarios[1])} >cypress/fixtures/user.json`
               )
           });
       });
     });
-// `echo ${JSON.stringify(response.body.usuarios[1])} >cypress/fixtures/user.json`
+
     // commented for github run
     context('When I send GET /usuarios passing id', () => {
       before(() => {
@@ -44,11 +44,11 @@ describe('Given the Users api', () => {
       it('Then it should return only the filtered user', () => {
         const userIdTask = cy.get('@userId')
         cy.fixture('user.json').then((user) => {
-          const userIdFile = this.user._id  
+          const userIdFile = JSON.stringify(user._id)
           cy.request(`/usuarios?_id=${userIdFile}`)
             .then((response) => {
               expect(response.status).to.eq(200)
-              // expect(JSON.stringify(user)).to.eq(JSON.stringify(response.body.usuarios[0]))
+              expect(JSON.stringify(user)).to.eq(JSON.stringify(response.body.usuarios[0]))
               expect(userIdFile).to.eq(response.body.usuarios[0]._id)  // validating using features file
               userIdTask.should('equal', userIdFile)  // validatingusing task         
             });      
