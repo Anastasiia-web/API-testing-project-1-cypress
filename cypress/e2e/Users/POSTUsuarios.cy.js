@@ -51,7 +51,7 @@ describe('Given the Users api', () => {
       cy.request({
         method: 'POST',
         url: '/usuarios',
-        body: registeredUser,
+        body: `${registeredUser}`,
         failOnStatusCode: false
       })
         .should((response) => {

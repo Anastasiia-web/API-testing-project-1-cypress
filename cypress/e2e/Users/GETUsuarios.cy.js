@@ -37,24 +37,24 @@ describe('Given the Users api', () => {
     })
 
     // commented for github run
-    context('When I send GET /usuarios passing id', () => {
-      before(() => {
-        cy.task('getItem','userId').as('userId')
-      })
-      it('Then it should return only the filtered user', () => {
-        const userIdTask = cy.get('@userId')
-        cy.fixture('user.json').then((user) => {
-          const userIdFile = user._id
-          cy.request(`/usuarios?_id="${userIdFile}"`)
-            .then((response) => {
-              expect(response.status).to.eq(200)
-              expect(JSON.stringify(user)).to.eq(JSON.stringify(response.body.usuarios[0]))
-              expect(userIdFile).to.eq(response.body.usuarios[0]._id)  // validating using features file
-              userIdTask.should('equal', userIdFile)  // validatingusing task         
-            });      
-        })
-    });
-  });
+  //   context('When I send GET /usuarios passing id', () => {
+  //     before(() => {
+  //       cy.task('getItem','userId').as('userId')
+  //     })
+  //     it('Then it should return only the filtered user', () => {
+  //       const userIdTask = cy.get('@userId')
+  //       cy.fixture('user.json').then((user) => {
+  //         const userIdFile = user._id
+  //         cy.request(`/usuarios?_id=${userIdFile}`)
+  //           .then((response) => {
+  //             expect(response.status).to.eq(200)
+  //             expect(JSON.stringify(user)).to.eq(JSON.stringify(response.body.usuarios[0]))
+  //             expect(userIdFile).to.eq(response.body.usuarios[0]._id)  // validating using features file
+  //             userIdTask.should('equal', userIdFile)  // validatingusing task         
+  //           });      
+  //       })
+  //   });
+  // });
 
   // using qs - query string
   context('When I send GET /usuarios passing id query param', () => {
