@@ -60,7 +60,7 @@ describe('Given the Users api', () => {
 //     });
 //   });
 // });
-// });
+});
 
 // without plugin faker
 // describe('Given the Users api', () => {
