@@ -1,0 +1,768 @@
+{
+  "stats": {
+    "suites": 4,
+    "tests": 14,
+    "passes": 9,
+    "pending": 0,
+    "failures": 5,
+    "testsRegistered": 14,
+    "passPercent": 64.28571428571429,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "start": "2023-12-17T19:15:38.440Z",
+    "end": "2023-12-17T19:15:53.939Z",
+    "duration": 15499
+  },
+  "results": [
+    {
+      "uuid": "66176155-177c-404a-b0b2-0ba510f7733b",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Products\\GETProdutos.cy.js",
+      "file": "cypress\\e2e\\Products\\GETProdutos.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "7c906c31-78fa-4562-be95-8296615db9ff",
+          "title": "Given Products api",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "3c453bf3-21d2-447c-a6b6-2940a28a42ee",
+              "title": "When I send GET /produtos",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Then it should return a list with all products",
+                  "fullTitle": "Given Products api When I send GET /produtos Then it should return a list with all products",
+                  "timedOut": null,
+                  "duration": 335,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "cy.request({\n  method: 'GET',\n  url: '/produtos'\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.quantidade).to.eq(17);\n  expect(response.body).to.haveOwnProperty('produtos').and.not.empty;\n  expect(response.body.produtos.length).to.be.eq(17);\n  expect(response.body.produtos[0]).to.have.all.keys('nome', 'preco', 'descricao', 'quantidade', '_id');\n  cy.writeFile('cypress/fixtures/product.json', response.body.produtos[0]);\n});",
+                  "err": {
+                    "message": "AssertionError: expected 2 to equal 17",
+                    "estack": "AssertionError: expected 2 to equal 17\n    at Context.eval (webpack://api-testing-project-1-cypress/./cypress/e2e/Products/GETProdutos.cy.js:12:56)",
+                    "diff": "- 2\n+ 17\n"
+                  },
+                  "uuid": "d718634a-5a38-4b2e-b2f4-8566c4c8d398",
+                  "parentUUID": "3c453bf3-21d2-447c-a6b6-2940a28a42ee",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [
+                {
+                  "uuid": "98f282ab-ac85-4696-9aed-78de5013e43d",
+                  "title": "When I send GET /produtos passing id query param",
+                  "fullFile": "",
+                  "file": "",
+                  "beforeHooks": [],
+                  "afterHooks": [],
+                  "tests": [
+                    {
+                      "title": "Then it should return only the filtered product",
+                      "fullTitle": "Given Products api When I send GET /produtos When I send GET /produtos passing id query param Then it should return only the filtered product",
+                      "timedOut": null,
+                      "duration": 193,
+                      "state": "passed",
+                      "speed": "fast",
+                      "pass": true,
+                      "fail": false,
+                      "pending": false,
+                      "context": null,
+                      "code": "cy.fixture('product.json').then(product => {\n  const productId = product._id;\n  cy.request(`/produtos?_id=${productId}`).then(response => {\n    expect(response.status).to.eq(200);\n    expect(response.body).to.haveOwnProperty(\"produtos\");\n    expect(response.body.produtos).have.length(1);\n    expect(response.body.produtos).to.be.an('array');\n    expect(JSON.stringify(product)).to.eq(JSON.stringify(response.body.produtos[0]));\n    expect(productId).to.eq(response.body.produtos[0]._id); // validating using features file     \n  });\n});",
+                      "err": {},
+                      "uuid": "6b525749-7e54-4978-bba2-ef9a99893b99",
+                      "parentUUID": "98f282ab-ac85-4696-9aed-78de5013e43d",
+                      "isHook": false,
+                      "skipped": false
+                    }
+                  ],
+                  "suites": [],
+                  "passes": [
+                    "6b525749-7e54-4978-bba2-ef9a99893b99"
+                  ],
+                  "failures": [],
+                  "pending": [],
+                  "skipped": [],
+                  "duration": 193,
+                  "root": false,
+                  "rootEmpty": false,
+                  "_timeout": 2000
+                }
+              ],
+              "passes": [],
+              "failures": [
+                "d718634a-5a38-4b2e-b2f4-8566c4c8d398"
+              ],
+              "pending": [],
+              "skipped": [],
+              "duration": 335,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "acdb15b5-0ee9-4c69-9465-07ccbdccf93f",
+              "title": "When I do not pass id param into GET /produtos",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Then it should return an empty array",
+                  "fullTitle": "Given Products api When I do not pass id param into GET /produtos Then it should return an empty array",
+                  "timedOut": null,
+                  "duration": 179,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "cy.request(`/produtos?_id=null`).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.haveOwnProperty(\"produtos\");\n  expect(response.body.produtos).to.be.empty;\n});",
+                  "err": {},
+                  "uuid": "85a148d2-2c8b-4031-a8c3-0d0d59e9122d",
+                  "parentUUID": "acdb15b5-0ee9-4c69-9465-07ccbdccf93f",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "85a148d2-2c8b-4031-a8c3-0d0d59e9122d"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 179,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "43451986-cd3f-4209-be70-d91945f2ad83",
+              "title": "When I intercept the response",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should return a product from my-product.json file",
+                  "fullTitle": "Given Products api When I intercept the response should return a product from my-product.json file",
+                  "timedOut": null,
+                  "duration": 1676,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "cy.intercept('GET', '/produtos', {\n  fixture: 'my-product.json'\n}).as('h');\ncy.visit('https://serverest.dev');\ncy.get('#operations-Produtos-get_produtos > .opblock-summary > .opblock-summary-control > .opblock-summary-method').click();\ncy.get('.try-out > .btn').click();\ncy.get('.execute-wrapper > .btn').click();\ncy.wait('@h').its('response').then(response => {\n  cy.wrap(response).its('statusCode').should('eq', 200);\n  cy.wrap(response).its('body._id').should('eq', 'My-BeeJh5lz3k6kSIzA');\n});",
+                  "err": {},
+                  "uuid": "3bae6332-1655-4c41-a8da-eb7b40b43f35",
+                  "parentUUID": "43451986-cd3f-4209-be70-d91945f2ad83",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "3bae6332-1655-4c41-a8da-eb7b40b43f35"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 1676,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "072935a9-e868-4218-9464-eece082040ae",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Users\\GETUsuarios.cy.js",
+      "file": "cypress\\e2e\\Users\\GETUsuarios.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "5a1178ec-19c6-4bb5-9786-83465ce65fff",
+          "title": "Given the Users api",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "aeef4568-900e-4e07-9b87-da2978faa806",
+              "title": "When I send GET /usuarios",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Then it should return a list with all registered users",
+                  "fullTitle": "Given the Users api When I send GET /usuarios Then it should return a list with all registered users",
+                  "timedOut": null,
+                  "duration": 352,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "cy.request({\n  method: 'GET',\n  url: '/usuarios'\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.haveOwnProperty('quantidade');\n  expect(response.body).to.haveOwnProperty('usuarios').and.not.empty;\n  expect(response.body.quantidade).to.eq(response.body.usuarios.length);\n  // iterating via array\n  Cypress._.each(response.body.usuarios, usuario => {\n    expect(usuario).to.have.all.keys('nome', 'email', 'password', 'administrador', '_id');\n    expect(usuario.email).to.not.be.null;\n  });\n  // setting task           \n  const userId = response.body.usuarios[1]._id;\n  cy.task('setItem', {\n    name: 'userId',\n    value: userId\n  });\n  // recording data to json file\n  cy.exec(`echo ${JSON.stringify(response.body.usuarios[1])} >cypress/fixtures/user.json`);\n});",
+                  "err": {
+                    "message": "TypeError: Cannot read properties of undefined (reading '_id')",
+                    "estack": "TypeError: Cannot read properties of undefined (reading '_id')\n    at Context.eval (webpack://api-testing-project-1-cypress/./cypress/e2e/Users/GETUsuarios.cy.js:26:55)",
+                    "diff": null
+                  },
+                  "uuid": "6b4ed158-cf66-4306-accb-556012781dbc",
+                  "parentUUID": "aeef4568-900e-4e07-9b87-da2978faa806",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [],
+              "failures": [
+                "6b4ed158-cf66-4306-accb-556012781dbc"
+              ],
+              "pending": [],
+              "skipped": [],
+              "duration": 352,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "dd13ec46-410e-452c-9a7a-6b052edc820a",
+              "title": "When I send GET /usuarios passing id",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Then it should return only the filtered user",
+                  "fullTitle": "Given the Users api When I send GET /usuarios passing id Then it should return only the filtered user",
+                  "timedOut": null,
+                  "duration": 131,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "const userIdTask = cy.get('@userId');\ncy.fixture('user.json').then(user => {\n  const userIdFile = user._id;\n  cy.request(`/usuarios?_id=${userIdFile}`).then(response => {\n    expect(response.status).to.eq(200);\n    expect(JSON.stringify(user)).to.eq(JSON.stringify(response.body.usuarios[0]));\n    expect(userIdFile).to.eq(response.body.usuarios[0]._id); // validating using features file\n    userIdTask.should('equal', userIdFile); // validatingusing task         \n  });\n});",
+                  "err": {
+                    "message": "CypressError: `cy.task('getItem')` failed with the following error:\n\nThe task 'getItem' returned undefined. You must return a value, null, or a promise that resolves to a value or null to indicate that the task was handled.\n\nThe task handler was:\n\ngetItem (name) {\n            if (name in items) {\n              return items[name]\n            }\n          }\n\nFix this in your setupNodeEvents method here:\nC:\\Users\\I742339\\Desktop\\API\\cypress-repo-1\\API-testing-project-1-cypress\\cypress.config.js\n\nhttps://on.cypress.io/api/task\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `When I send GET /usuarios p...`",
+                    "estack": "CypressError: `cy.task('getItem')` failed with the following error:\n\nThe task 'getItem' returned undefined. You must return a value, null, or a promise that resolves to a value or null to indicate that the task was handled.\n\nThe task handler was:\n\ngetItem (name) {\n            if (name in items) {\n              return items[name]\n            }\n          }\n\nFix this in your setupNodeEvents method here:\nC:\\Users\\I742339\\Desktop\\API\\cypress-repo-1\\API-testing-project-1-cypress\\cypress.config.js\n\nhttps://on.cypress.io/api/task\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `When I send GET /usuarios p...`\n    at <unknown> (https://serverest.dev/__cypress/runner/cypress_runner.js:135695:72)\n    at tryCatcher (https://serverest.dev/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (https://serverest.dev/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (https://serverest.dev/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (https://serverest.dev/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (https://serverest.dev/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (https://serverest.dev/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (https://serverest.dev/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (https://serverest.dev/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (https://serverest.dev/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://api-testing-project-1-cypress/./cypress/e2e/Users/GETUsuarios.cy.js:41:11)",
+                    "diff": null
+                  },
+                  "uuid": "e90e6169-da7c-41a6-b40c-9f82f830f56c",
+                  "parentUUID": "dd13ec46-410e-452c-9a7a-6b052edc820a",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [],
+              "failures": [
+                "e90e6169-da7c-41a6-b40c-9f82f830f56c"
+              ],
+              "pending": [],
+              "skipped": [],
+              "duration": 131,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "836146c9-df42-4896-b07d-9e343120bf11",
+              "title": "When I send GET /usuarios passing id query param",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Then it should return only the filtered user",
+                  "fullTitle": "Given the Users api When I send GET /usuarios passing id query param Then it should return only the filtered user",
+                  "timedOut": null,
+                  "duration": 149,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "cy.get('@userId').then(id => {\n  cy.request({\n    method: 'GET',\n    url: 'https://serverest.dev/usuarios',\n    qs: {\n      _id: `${id}`\n    }\n  }).should(response => {\n    expect(response.status).to.eq(200);\n    expect(response.body.usuarios[0]._id).to.eq(`${id}`);\n  });\n});",
+                  "err": {
+                    "message": "CypressError: `cy.task('getItem')` failed with the following error:\n\nThe task 'getItem' returned undefined. You must return a value, null, or a promise that resolves to a value or null to indicate that the task was handled.\n\nThe task handler was:\n\ngetItem (name) {\n            if (name in items) {\n              return items[name]\n            }\n          }\n\nFix this in your setupNodeEvents method here:\nC:\\Users\\I742339\\Desktop\\API\\cypress-repo-1\\API-testing-project-1-cypress\\cypress.config.js\n\nhttps://on.cypress.io/api/task\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `When I send GET /usuarios p...`",
+                    "estack": "CypressError: `cy.task('getItem')` failed with the following error:\n\nThe task 'getItem' returned undefined. You must return a value, null, or a promise that resolves to a value or null to indicate that the task was handled.\n\nThe task handler was:\n\ngetItem (name) {\n            if (name in items) {\n              return items[name]\n            }\n          }\n\nFix this in your setupNodeEvents method here:\nC:\\Users\\I742339\\Desktop\\API\\cypress-repo-1\\API-testing-project-1-cypress\\cypress.config.js\n\nhttps://on.cypress.io/api/task\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `When I send GET /usuarios p...`\n    at <unknown> (https://serverest.dev/__cypress/runner/cypress_runner.js:135695:72)\n    at tryCatcher (https://serverest.dev/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (https://serverest.dev/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (https://serverest.dev/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (https://serverest.dev/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (https://serverest.dev/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (https://serverest.dev/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (https://serverest.dev/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (https://serverest.dev/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (https://serverest.dev/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://api-testing-project-1-cypress/./cypress/e2e/Users/GETUsuarios.cy.js:61:9)",
+                    "diff": null
+                  },
+                  "uuid": "b0f9b4cf-360b-4fb0-a1c3-0e767c039e45",
+                  "parentUUID": "836146c9-df42-4896-b07d-9e343120bf11",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [],
+              "failures": [
+                "b0f9b4cf-360b-4fb0-a1c3-0e767c039e45"
+              ],
+              "pending": [],
+              "skipped": [],
+              "duration": 149,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "b9112fba-5717-4ee8-8ea5-ea902b6a9a4e",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Users\\POSTUsuarios.cy.js",
+      "file": "cypress\\e2e\\Users\\POSTUsuarios.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "78884ef6-b45a-4d64-ae49-6bb96958a92d",
+          "title": "Given the Users api",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "1ef1f580-c370-4729-bdb2-467ac5fd8bb8",
+              "title": "When I send POST /usuarios",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Then it should create a new user",
+                  "fullTitle": "Given the Users api When I send POST /usuarios Then it should create a new user",
+                  "timedOut": null,
+                  "duration": 214,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "cy.request({\n  method: 'POST',\n  url: '/usuarios',\n  body: fakeUser\n}).should(response => {\n  expect(response.status).eq(201);\n  expect(response.body.message).eq(\"Cadastro realizado com sucesso\");\n});",
+                  "err": {},
+                  "uuid": "74036833-825c-4eb9-ab1b-ed64339d6595",
+                  "parentUUID": "1ef1f580-c370-4729-bdb2-467ac5fd8bb8",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "74036833-825c-4eb9-ab1b-ed64339d6595"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 214,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "ccef01e8-63cc-4bd1-9eb3-be0cab8068fe",
+              "title": "When I send POST /usuarios without email",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Then the error meassage should be displayed",
+                  "fullTitle": "Given the Users api When I send POST /usuarios without email Then the error meassage should be displayed",
+                  "timedOut": null,
+                  "duration": 178,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// filter out email by JSON.stringify()\nconst userWithoutEmail = JSON.stringify(fakeUser, function (key, value) {\n  if (key == 'email') return undefined;else return value;\n});\ncy.request({\n  method: 'POST',\n  url: '/usuarios',\n  body: userWithoutEmail,\n  failOnStatusCode: false\n}).should(response => {\n  expect(response.status).eq(400);\n  expect(response.body.email).eq(\"email é obrigatório\");\n});",
+                  "err": {},
+                  "uuid": "9778b368-a307-4878-ab11-60c3cc984574",
+                  "parentUUID": "ccef01e8-63cc-4bd1-9eb3-be0cab8068fe",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "9778b368-a307-4878-ab11-60c3cc984574"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 178,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "46df6192-594a-4df1-94a3-826b36f6f66f",
+              "title": "When I send POST /usuarios with already registered email",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Then the error message should be returned",
+                  "fullTitle": "Given the Users api When I send POST /usuarios with already registered email Then the error message should be returned",
+                  "timedOut": null,
+                  "duration": 184,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "cy.fixture('user.json').then(registeredUser => {\n  cy.request({\n    method: 'POST',\n    url: '/usuarios',\n    body: JSON.stringify(registeredUser),\n    failOnStatusCode: false\n  }).should(response => {\n    expect(response.status).eq(400);\n  });\n});",
+                  "err": {},
+                  "uuid": "c673f755-f061-4d38-87fb-9080c53ee5cd",
+                  "parentUUID": "46df6192-594a-4df1-94a3-826b36f6f66f",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "c673f755-f061-4d38-87fb-9080c53ee5cd"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 184,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "f62c0ff7-3169-4d21-9d73-ff34ba0bce4e",
+      "title": "",
+      "fullFile": "cypress\\e2e\\test.cy.js",
+      "file": "cypress\\e2e\\test.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "ceb1fdf9-e54f-4302-afd4-864bfccde793",
+          "title": "Mocha’s interface",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "f565fec1-3e0e-4e0f-8a1e-2871d3a1b274",
+              "title": "it provides a way to keep tests easier to read and organized.",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "This is your test case",
+                  "fullTitle": "Mocha’s interface it provides a way to keep tests easier to read and organized. This is your test case",
+                  "timedOut": null,
+                  "duration": 16,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// tag:smoke\nexpect(true).to.eq(true);",
+                  "err": {},
+                  "uuid": "5525fb12-5a1b-4e1e-8b30-b5f9e2493780",
+                  "parentUUID": "f565fec1-3e0e-4e0f-8a1e-2871d3a1b274",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "5525fb12-5a1b-4e1e-8b30-b5f9e2493780"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 16,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "2fc43175-2712-4f55-9ad6-c6e8dc915882",
+          "title": "produtos API",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "returns JSON",
+              "fullTitle": "produtos API returns JSON",
+              "timedOut": null,
+              "duration": 352,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request('/produtos').its('headers').its('content-type').should('include', 'application/json');",
+              "err": {},
+              "uuid": "9ab7f56d-482d-4928-bc84-5d95e79770ab",
+              "parentUUID": "2fc43175-2712-4f55-9ad6-c6e8dc915882",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "loads 17 items",
+              "fullTitle": "produtos API loads 17 items",
+              "timedOut": null,
+              "duration": 4314,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request('/produtos').its('body.produtos').should('have.length', 17);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected [ Array(2) ] to have a length of 17 but got 2",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected [ Array(2) ] to have a length of 17 but got 2\n    at Context.eval (webpack://api-testing-project-1-cypress/./cypress/e2e/test.cy.js:23:9)",
+                "diff": "- 2\n+ 17\n"
+              },
+              "uuid": "f1e506c6-12b5-4d0c-b8ea-7859913d3ee7",
+              "parentUUID": "2fc43175-2712-4f55-9ad6-c6e8dc915882",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "9ab7f56d-482d-4928-bc84-5d95e79770ab"
+          ],
+          "failures": [
+            "f1e506c6-12b5-4d0c-b8ea-7859913d3ee7"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 4666,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "b9c97689-ea13-4815-adf6-62081aca9080",
+          "title": "Given api GET /produtos",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "1b31088f-34bd-446f-ac3b-b8c72699cb04",
+              "title": "When I intercept the response",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should return a product from my-product.json file",
+                  "fullTitle": "Given api GET /produtos When I intercept the response should return a product from my-product.json file",
+                  "timedOut": null,
+                  "duration": 2476,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "cy.intercept('GET', '/produtos', {\n  fixture: 'my-product.json'\n}).as('h');\ncy.visit('https://serverest.dev');\ncy.get('#operations-Produtos-get_produtos > .opblock-summary > .opblock-summary-control > .opblock-summary-method').click();\ncy.get('.try-out > .btn').click();\ncy.get('.execute-wrapper > .btn').click();\ncy.wait('@h').its('response').then(response => {\n  cy.wrap(response).its('statusCode').should('eq', 200);\n  cy.wrap(response).its('body._id').should('eq', 'My-BeeJh5lz3k6kSIzA');\n});",
+                  "err": {},
+                  "uuid": "e6443256-e40a-48a8-ae7e-01554ff415d4",
+                  "parentUUID": "1b31088f-34bd-446f-ac3b-b8c72699cb04",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "e6443256-e40a-48a8-ae7e-01554ff415d4"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 2476,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/reports/mocha",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

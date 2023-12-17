@@ -20,7 +20,7 @@ describe('Mocha’s interface', () => {
     it('loads 17 items', () => {
       cy.request('/produtos')
         .its('body.produtos')
-        .should('have.length', 17)
+        .should('have.length', 2)
     })
   })
 

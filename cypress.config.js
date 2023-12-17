@@ -3,6 +3,17 @@ const { defineConfig } = require("cypress");
 const faker = require('faker');
 
 module.exports = defineConfig({
+  "reporter": "cypress-multi-reporters",
+    "reporterOptions": {
+        "reporterEnabled": "mochawesome",
+        "mochawesomeReporterOptions": {
+            "reportDir": "cypress/reports/mocha",
+            "quite": true,
+            "overwrite": false,
+            "html": false,
+            "json": true
+        }
+    },
   env: {
     "my-var": "ok",
   },
@@ -34,6 +45,7 @@ module.exports = defineConfig({
     baseUrl: 'https://serverest.dev'
   },
 });
+
 // baseUrl: 'https://jsonplaceholder.cypress.io'
 
 //0000000
