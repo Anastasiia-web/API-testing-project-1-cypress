@@ -30,12 +30,12 @@ describe('Given the Users api', () => {
               })
               // recording data to json file
               cy.exec(
-                `echo ${JSON.stringify(response.body.usuarios[1])} >cypress/fixtures/user.json`
+                `echo ${response.body.usuarios[1]} >cypress/fixtures/user.json`
               )
           });
       });
     });
-
+// `echo ${JSON.stringify(response.body.usuarios[1])} >cypress/fixtures/user.json`
     // commented for github run
     context('When I send GET /usuarios passing id', () => {
       before(() => {
