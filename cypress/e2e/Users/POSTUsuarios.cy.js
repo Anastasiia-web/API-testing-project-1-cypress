@@ -43,6 +43,7 @@ describe('Given the Users api', () => {
     });
   });
 
+  // commented for github run
   // negative test case
 //   context('When I send POST /usuarios with already registered email', () => {
 //     it('Then the error message should be returned', () => {
